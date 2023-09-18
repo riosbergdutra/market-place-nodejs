@@ -1,8 +1,12 @@
 const express = require("express")
 
+const ConnectToDatabase = require("./src/database/database")
+
 const app = express()
 
 const port = 5000
+
+ConnectToDatabase()
 
 app.use(express.json())
 
