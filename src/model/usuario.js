@@ -9,12 +9,12 @@ const usuarioSchema = new mongoose.Schema({
         rua: { type: String, required: true },
         numero: { type: Number, required: true },
         CEP: { type: String, required: true },
-        createdAt: { type: Date, required: true },
+        createdAt: { type: Date, required: true, default: Date.now() }, // Corrigido o nome do campo
     }],
-    createdAt: { type: Date, required: true }, // Corrigido o nome do campo
+    createdAt: { type: Date, required: true, default: Date.now() }, // Corrigido o nome do campo
     produtos_fav: [{
         _id: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: "produtos" },
-        createdAt: { type: Date, required: true },
+        createdAt: { type: Date, required: true, default: Date.now() },
     }],
     admin: { type: Boolean, required: true, default: false },
 });
