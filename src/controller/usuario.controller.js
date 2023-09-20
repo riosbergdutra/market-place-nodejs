@@ -30,21 +30,19 @@ const findAllUsersController =  async (req,res) => {
     }
 };
 
-const createUserController = async (req,res) => {
-    try{
-        const body = req.body
-        if(!body.nome){
-            return res.status(400).send({message: `O campo 'Nome' precisa ser preeencido!`})
+const createUserController = async (req, res) => {
+    try {
+        const body = req.body;
+        if (!body.nome) {
+            return res.status(400).send({ message: `O campo 'Nome' precisa ser preenchido!` });
         }
 
-        return req.status(201).send(await userService.createUserService(body))
-
-
-    }catch (err){
-        console.log(`erro: ${err.message}`)
-        res.status(500).send({message: `Erro inesperado tente novamente!`})
+        return res.status(201).send(await userService.createUserService(body));
+    } catch (err) {
+        console.log(`erro: ${err.message}`);
+        res.status(500).send({ message: `Erro inesperado, tente novamente!` });
     }
-}
+};
 
 const updateUserController = async (req,res) => {
     try{
@@ -66,11 +64,14 @@ const removeUserController = async (req,res) => {
 
         const deletedUser = await userService.removeUserService(req.params.id)
 
-        if(deletedUser.deletedCount > 0) {
-            res.status(200).send({message:`sucesso, usuario deletado!`})
-        }else{
-            res.status(404).send({message:`Usuario não encontrado, tente novamente!`})
-        }
+        console.log(deletedUser)
+        res.status(200).send({message:`sucesso, usuario deletado!`})
+
+        // if(deletedUser.deletedCount > 0) {
+        //    res.status(200).send({message:`sucesso, usuario deletado!`})
+        // }else{
+        //     res.status(404).send({message:`Usuario não encontrado, tente novamente!`})
+        // }
 
     }catch (err){
         console.log(`erro: ${err.message}`)
