@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt")
 
 const usuarioSchema = new mongoose.Schema({
     nome: { type: String, required: true },
@@ -16,8 +17,15 @@ const usuarioSchema = new mongoose.Schema({
     //     _id: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: "produtos" },
     //     createdAt: { type: Date, required: true, default: Date.now() },
     // }],
-    // admin: { type: Boolean, required: true, default: false },
+    // admin: { type: Boolean, required: true, default: false }
 });
+
+ usuarioSchema.pre("save", async function(next) {
+    if(this.senha){
+        this.senha = await bcrypt.hash(this.senha, 10)
+     }
+    next()
+ })
 
 const Usuario = mongoose.model("usuarios", usuarioSchema);
 
