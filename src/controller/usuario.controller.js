@@ -78,24 +78,33 @@ const removeUserController = async (req,res) => {
     }
 }
 
-const addUserAddresController = async (req,res) => {
-    try{
+const addUserAddresController = async (req, res) => {
+    try {
+        req.body.createAt = new Date();
+        const endereco = await userService.addUserAddresService(req.params.id, req.body);
 
+        if (endereco) {
+            res.status(200).send({ message: `Endereço adicionado com sucesso!` });
+        } else {
+            res.status(400).send({ message: `Algo deu errado no endereco, tente novamente!` });
+        }
 
-
-    }catch (err){
-        console.log(`erro: ${err.message}`)
-        res.status(500).send({message: `Erro inesperado tente novamente!`})
+    } catch (err) {
+        console.error(`Erro: ${err.message}`);
+        res.status(500).send({ message: `Erro inesperado: ${err.message}` });
     }
 }
-const removeUserAddresController = async (req,res) => {
-    try{
-
-
-
-    }catch (err){
-        console.log(`erro: ${err.message}`)
-        res.status(500).send({message: `Erro inesperado tente novamente!`})
+const removeUserAddresController = async (req, res) => {
+    try {
+        const endereco = await userService.removeUserAddresService(req.params.id, req.body.addresId);
+        if (endereco) {
+            res.status(200).send({ message: `Endereço removido com sucesso!` });
+        } else {
+            res.status(400).send({ message: `Algo deu errado no endereco, tente novamente!` });
+        }
+    }catch (err) {
+        console.error(`Erro: ${err.message}`);
+        res.status(500).send({ message: `Erro inesperado: ${err.message}` });
     }
 }
 
